@@ -17,14 +17,14 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #0e0e0e;
-      --bg-card:   #141414;
-      --green:     #00ff47;
-      --green-dim: rgba(0,255,71,.08);
-      --green-glow:rgba(0,255,71,.18);
-      --text:      #ffffff;
-      --muted:     rgba(255,255,255,.55);
-      --border:    rgba(255,255,255,.08);
+      --bg:        #F4F4F5;
+      --bg-dark:   #0E0E0E;
+      --orange:    #D44B10;
+      --text:      #1B1C1E;
+      --text2:     #2E2F33;
+      --muted:     #888888;
+      --border:    rgba(27,28,30,.1);
+      --white:     #ffffff;
       --radius:    16px;
     }
 
@@ -40,8 +40,8 @@
 
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #444; }
+    ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #aaa; }
 
     h1, h2, h3 { font-family: 'Chakra Petch', sans-serif; line-height: 1.1; }
 
@@ -57,9 +57,9 @@
       transition: background .3s, backdrop-filter .3s, border-bottom .3s;
     }
     nav.scrolled {
-      background: rgba(14,14,14,.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(244,244,245,.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
     }
     .nav-logo {
@@ -73,7 +73,7 @@
       align-items: center;
       gap: 8px;
     }
-    .nav-logo span { color: var(--green); }
+    .nav-logo span { color: var(--orange); }
     .nav-links {
       display: flex;
       gap: 36px;
@@ -108,7 +108,7 @@
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(14,14,14,.97);
+      background: rgba(244,244,245,.97);
       z-index: 99;
       flex-direction: column;
       align-items: center;
@@ -123,9 +123,10 @@
       letter-spacing: .08em;
       text-decoration: none;
       color: var(--text);
+      text-transform: uppercase;
       transition: color .2s;
     }
-    .mobile-menu a:hover { color: var(--green); }
+    .mobile-menu a:hover { color: var(--orange); }
 
     /* ── HERO ── */
     .about-hero {
@@ -140,7 +141,7 @@
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(ellipse at 60% 30%, rgba(0,255,71,.05) 0%, transparent 60%);
+      background: radial-gradient(ellipse at 60% 30%, rgba(212,75,16,.04) 0%, transparent 60%);
       pointer-events: none;
     }
 
@@ -162,7 +163,7 @@
       font-family: 'IBM Plex Mono', monospace;
       font-size: 11px;
       letter-spacing: .18em;
-      color: var(--green);
+      color: var(--orange);
       text-transform: uppercase;
       margin-bottom: 16px;
       display: flex;
@@ -175,7 +176,7 @@
       flex: 1;
       max-width: 48px;
       height: 1px;
-      background: var(--green);
+      background: var(--orange);
     }
     .name-big {
       font-family: 'Chakra Petch', sans-serif;
@@ -281,10 +282,8 @@
 
     /* ── NUMBERS ── */
     .numbers {
-      background: var(--bg-card);
+      background: var(--bg-dark);
       padding: 100px 40px;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
     }
     .numbers-head {
       text-align: center;
@@ -294,12 +293,13 @@
     .numbers-head h2 {
       font-family: 'Chakra Petch', sans-serif;
       font-size: clamp(28px, 4vw, 44px);
-      font-weight: 700;
+      font-weight: 500;
+      color: var(--white);
       margin-bottom: 12px;
     }
     .numbers-head p {
       font-size: 14px;
-      color: var(--muted);
+      color: rgba(255,255,255,.45);
       font-family: 'IBM Plex Mono', monospace;
       letter-spacing: .08em;
     }
@@ -312,10 +312,10 @@
       margin: 0 auto;
     }
     .num-card {
-      background: var(--bg);
+      background: rgba(255,255,255,.04);
       padding: 40px 24px;
       text-align: center;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255,255,255,.06);
     }
     .num-card:first-child { border-radius: var(--radius) 0 0 var(--radius); }
     .num-card:last-child  { border-radius: 0 var(--radius) var(--radius) 0; }
@@ -323,15 +323,15 @@
     .num-value {
       font-family: 'Chakra Petch', sans-serif;
       font-size: clamp(36px, 5vw, 60px);
-      font-weight: 700;
-      color: var(--green);
+      font-weight: 500;
+      color: var(--orange);
       line-height: 1;
       display: block;
       margin-bottom: 10px;
     }
     .num-label {
       font-size: 13px;
-      color: var(--muted);
+      color: rgba(255,255,255,.5);
       line-height: 1.5;
     }
 
@@ -347,22 +347,29 @@
       max-width: 1200px;
       margin: 0 auto 60px;
     }
-    .footer-col h4 {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 20px;
+    .footer-col-label {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: clamp(18px, 2.4vw, 28px);
+      font-weight: 500;
+      color: var(--orange);
+      margin-bottom: 16px;
     }
-    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
     .footer-col ul a {
-      font-size: 14px;
-      color: var(--muted);
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
       text-decoration: none;
       transition: color .2s;
     }
-    .footer-col ul a:hover { color: var(--text); }
+    .footer-col ul a:hover { color: var(--orange); }
+    .footer-col .mono-link a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: capitalize;
+    }
     .footer-brand {
       max-width: 1200px;
       margin: 0 auto;
@@ -374,17 +381,17 @@
     .footer-big {
       font-family: 'Chakra Petch', sans-serif;
       font-size: clamp(36px, 8vw, 96px);
-      font-weight: 700;
+      font-weight: 500;
       line-height: 1;
-      color: rgba(255,255,255,.06);
-      letter-spacing: -.02em;
+      color: rgba(27,28,30,.07);
+      letter-spacing: -.01em;
     }
     .footer-copy {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 11px;
       color: var(--muted);
-      letter-spacing: .08em;
       text-align: right;
+      line-height: 1.6;
     }
 
     /* ── ANIMATIONS ── */
@@ -435,26 +442,29 @@
 
 <!-- ── NAV ── -->
 <nav id="nav">
-  <a href="index.html" class="nav-logo">
-    <span>✦</span> OFFICE SHRIMP
-  </a>
-  <ul class="nav-links">
-    <li><a href="index.html">HOME</a></li>
-    <li><a href="index.html#features">FEATURES</a></li>
-    <li><a href="index.html#waitlist">WAITLIST</a></li>
-    <li><a href="about.html" class="active">ABOUT</a></li>
+  <a href="index.html" class="nav-logo">OFFICE<br/>SHRIMP</a>
+
+  <ul class="nav-links" style="display:flex;gap:28px;justify-content:center;list-style:none;">
+    <li><a href="index.html" style="font-family:'Chakra Petch',sans-serif;font-size:11px;font-weight:600;letter-spacing:.14em;text-decoration:none;color:var(--text);text-transform:uppercase;">HOME</a></li>
+    <li><a href="index.html#features" style="font-family:'Chakra Petch',sans-serif;font-size:11px;font-weight:600;letter-spacing:.14em;text-decoration:none;color:var(--text);text-transform:uppercase;">FEATURES</a></li>
+    <li><a href="index.html#waitlist" style="font-family:'Chakra Petch',sans-serif;font-size:11px;font-weight:600;letter-spacing:.14em;text-decoration:none;color:var(--text);text-transform:uppercase;">WAITLIST</a></li>
   </ul>
-  <button class="hamburger" id="hamburger" aria-label="Menu öffnen">
+
+  <div style="display:flex;align-items:center;">
+    <a href="about.html" style="font-family:'Chakra Petch',sans-serif;font-size:11px;font-weight:600;letter-spacing:.14em;text-decoration:none;color:var(--orange);text-transform:uppercase;">ABOUT</a>
+  </div>
+
+  <button class="hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="index.html" onclick="closeMobile()">HOME</a>
+  <a href="index.html"          onclick="closeMobile()">HOME</a>
   <a href="index.html#features" onclick="closeMobile()">FEATURES</a>
   <a href="index.html#waitlist" onclick="closeMobile()">WAITLIST</a>
-  <a href="about.html" onclick="closeMobile()">ABOUT</a>
+  <a href="about.html"          onclick="closeMobile()">ABOUT</a>
 </div>
 
 <!-- ── ABOUT HERO ── -->
@@ -482,7 +492,7 @@
     </div>
     <div class="about-photo fade-up delay-2">
       <img
-        src="https://framerusercontent.com/images/5fRb2kIvRud536aU9EeTvjBGM.jpg"
+        src="images/about-balenciaga.jpg"
         alt="David Girnstein bei Balenciaga"
         loading="lazy"
       />
@@ -493,7 +503,7 @@
 <!-- ── CODE IMAGE ── -->
 <div class="code-strip fade-up">
   <img
-    src="https://framerusercontent.com/images/5OaAjUXfYRDBjEeCjK3S4eNR84.png"
+    src="images/about-code.png"
     alt="Office Shrimp Code Beispiel"
     loading="lazy"
   />
@@ -504,21 +514,21 @@
   <div class="gallery-grid">
     <div class="gallery-item fade-up delay-1">
       <img
-        src="https://framerusercontent.com/images/1odOBywLkLe6gMmT5dhuQmPMho.jpeg"
+        src="images/about-portrait.jpeg"
         alt="David Girnstein Portrait"
         loading="lazy"
       />
     </div>
     <div class="gallery-item fade-up delay-2">
       <img
-        src="https://framerusercontent.com/images/ZFjUSkMFY2Nmh96TXqBNZ6k.jpeg"
+        src="images/about-fullbody.jpeg"
         alt="David Girnstein Ganzkörper"
         loading="lazy"
       />
     </div>
     <div class="gallery-item fade-up delay-3">
       <img
-        src="https://framerusercontent.com/images/egUVOp2yhI6GBR3YUtH44hYWE.jpeg"
+        src="images/about-bootshaus.jpeg"
         alt="David Girnstein Bootshaus"
         loading="lazy"
       />
@@ -557,35 +567,32 @@
 <footer>
   <div class="footer-top">
     <div class="footer-col">
-      <h4>Pages</h4>
+      <p class="footer-col-label">Pages</p>
       <ul>
         <li><a href="index.html#hero-section">Home</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="#">Datenschutz</a></li>
-        <li><a href="#">Impressum</a></li>
+        <li><a href="datenschutz.html">Datenschutz</a></li>
+        <li><a href="impressum.html">Impressum</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Social Media</h4>
-      <ul>
-        <li><a href="https://www.instagram.com/girni._/" target="_blank" rel="noopener">Instagram: @girni._</a></li>
-        <li><a href="https://david-girnstein.framer.website" target="_blank" rel="noopener">Portfolio: David Girnstein</a></li>
+      <p class="footer-col-label">Social Media</p>
+      <ul class="mono-link">
+        <li><a href="https://www.instagram.com/david_girnstein/" target="_blank" rel="noopener">Instagram: @david_girnstein</a></li>
+        <li><a href="https://girnstein.studio" target="_blank" rel="noopener">Portfolio: girnstein.studio</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Email</h4>
-      <ul>
-        <li><a href="mailto:girn.davi01@gmail.com">GIRN.DAVI01@GMAIL.COM</a></li>
+      <p class="footer-col-label">Email</p>
+      <ul class="mono-link">
+        <li><a href="mailto:office-shrimp@girnstein.studio">office-shrimp@girnstein.studio</a></li>
       </ul>
     </div>
   </div>
 
   <div class="footer-brand">
-    <div class="footer-big">OFFICE&nbsp;&nbsp;SHRIMP</div>
-    <div class="footer-copy">
-      © 2025 Office Shrimp<br />
-      Made with 🦐 in Cologne
-    </div>
+    <div class="footer-big">OFFICE &nbsp;SHRIMP</div>
+    <div class="footer-copy">© 2025 Office Shrimp<br/>Made with 🦐 in Cologne</div>
   </div>
 </footer>
 

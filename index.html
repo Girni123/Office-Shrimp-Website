@@ -9,30 +9,25 @@
   <meta property="og:description" content="The first menu bar app that turns better posture into a game." />
   <meta property="og:type" content="website" />
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,700&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
 
   <style>
-    /* ── Reset & Base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #0e0e0e;
-      --bg-card:   #141414;
-      --bg-card2:  #1a1a1a;
-      --green:     #00ff47;
-      --green-dim: rgba(0,255,71,.08);
-      --green-glow:rgba(0,255,71,.18);
-      --text:      #ffffff;
-      --muted:     rgba(255,255,255,.55);
-      --border:    rgba(255,255,255,.08);
-      --radius:    16px;
+      --bg:      #F4F4F5;
+      --bg-dark: #0E0E0E;
+      --orange:  #D44B10;
+      --text:    #1B1C1E;
+      --text2:   #2E2F33;
+      --muted:   #888888;
+      --border:  rgba(27,28,30,.1);
+      --white:   #ffffff;
     }
 
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--bg);
       color: var(--text);
@@ -42,68 +37,79 @@
       overflow-x: hidden;
     }
 
-    /* ── Typography ── */
-    .chakra { font-family: 'Chakra Petch', sans-serif; }
-    .mono   { font-family: 'IBM Plex Mono', monospace; }
-
-    h1, h2, h3 { font-family: 'Chakra Petch', sans-serif; line-height: 1.1; }
-
-    /* ── Scrollbar ── */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #444; }
+    ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 9999px; }
 
     /* ── NAV ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      display: flex;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
-      justify-content: space-between;
-      padding: 18px 40px;
-      transition: background .3s, backdrop-filter .3s, border-bottom .3s;
+      padding: 14px 32px;
+      transition: background .3s, border-bottom .3s;
     }
     nav.scrolled {
-      background: rgba(14,14,14,.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(244,244,245,.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
     }
-
     .nav-logo {
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: .08em;
-      text-decoration: none;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .nav-logo span {
-      color: var(--green);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 36px;
-      list-style: none;
-    }
-    .nav-links a {
       font-family: 'Chakra Petch', sans-serif;
       font-size: 12px;
       font-weight: 600;
-      letter-spacing: .12em;
+      letter-spacing: .05em;
+      line-height: 1.25;
       text-decoration: none;
-      color: var(--muted);
+      color: var(--orange);
+      text-transform: uppercase;
+    }
+    .nav-center {
+      display: flex;
+      gap: 28px;
+      justify-content: center;
+      list-style: none;
+    }
+    .nav-center a {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-decoration: none;
+      color: var(--text);
+      text-transform: uppercase;
+      transition: color .2s;
+      position: relative;
+      padding-bottom: 2px;
+    }
+    .nav-center a::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0; right: 0;
+      height: 1px;
+      background: var(--orange);
+      transform: scaleX(0);
+      transition: transform .2s;
+    }
+    .nav-center a:hover { color: var(--orange); }
+    .nav-center a:hover::after, .nav-center a.active::after { transform: scaleX(1); }
+    .nav-center a.active { color: var(--orange); }
+    .nav-right a {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-decoration: none;
+      color: var(--text);
+      text-transform: uppercase;
       transition: color .2s;
     }
-    .nav-links a:hover { color: var(--text); }
+    .nav-right a:hover { color: var(--orange); }
 
-    /* mobile hamburger */
     .hamburger {
       display: none;
       flex-direction: column;
@@ -113,13 +119,7 @@
       border: none;
       padding: 4px;
     }
-    .hamburger span {
-      display: block;
-      width: 24px; height: 2px;
-      background: var(--text);
-      border-radius: 2px;
-      transition: all .3s;
-    }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: all .3s; }
     .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
@@ -127,530 +127,452 @@
     .mobile-menu {
       display: none;
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(14,14,14,.97);
+      inset: 0;
+      background: rgba(244,244,245,.97);
       z-index: 99;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 36px;
+      gap: 32px;
     }
     .mobile-menu.open { display: flex; }
     .mobile-menu a {
       font-family: 'Chakra Petch', sans-serif;
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: .08em;
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: .05em;
       text-decoration: none;
       color: var(--text);
+      text-transform: uppercase;
       transition: color .2s;
     }
-    .mobile-menu a:hover { color: var(--green); }
-
-    /* ── BUTTONS ── */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 32px;
-      font-family: 'Chakra Petch', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: .1em;
-      text-decoration: none;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      transition: all .2s;
-    }
-    .btn-green {
-      background: var(--green);
-      color: #000;
-    }
-    .btn-green:hover {
-      background: #fff;
-      transform: scale(1.03);
-      box-shadow: 0 0 24px var(--green-glow);
-    }
-    .btn-outline {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .btn-outline:hover {
-      border-color: var(--green);
-      color: var(--green);
-    }
+    .mobile-menu a:hover { color: var(--orange); }
 
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
-      display: grid;
-      grid-template-rows: 1fr;
-      padding-top: 80px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-inner {
+      padding-top: 58px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 80px 40px 60px;
-      position: relative;
-      z-index: 1;
+      border-bottom: 1px solid var(--border);
     }
-
-    /* Big title */
+    .hero-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      flex: 1;
+      min-height: calc(100vh - 58px - 65px);
+    }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 48px 40px 36px;
+      border-right: 1px solid var(--border);
+    }
     .hero-title {
       font-family: 'Chakra Petch', sans-serif;
-      font-size: clamp(72px, 14vw, 180px);
-      font-weight: 700;
-      line-height: .92;
-      letter-spacing: -.02em;
+      font-size: clamp(88px, 15vw, 220px);
+      font-weight: 500;
+      line-height: .82;
+      letter-spacing: -.01em;
       color: var(--text);
-      display: flex;
-      flex-direction: column;
-      gap: 0;
+      margin-bottom: 28px;
     }
-    .hero-title .line2 {
-      color: var(--green);
-      -webkit-text-stroke: 2px var(--green);
+    .hero-subtitle {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: clamp(15px, 1.5vw, 20px);
+      font-weight: 500;
+      color: var(--orange);
+      line-height: 1.4;
+      max-width: 480px;
     }
-
-    .hero-tag {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      letter-spacing: .18em;
-      color: var(--green);
-      text-transform: uppercase;
-      margin-bottom: 24px;
+    .hero-right {
       display: flex;
       align-items: center;
-      gap: 10px;
-    }
-    .hero-tag::before, .hero-tag::after {
-      content: '';
-      display: block;
-      width: 32px; height: 1px;
-      background: var(--green);
-    }
-
-    .hero-subtitle {
-      font-size: 18px;
-      font-weight: 400;
-      color: var(--muted);
-      max-width: 520px;
-      margin: 24px auto 36px;
-      line-height: 1.6;
-    }
-
-    .hero-cta {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
       justify-content: center;
+      padding: 48px 40px;
+      overflow: hidden;
     }
-
-    /* Shrimp image */
-    .hero-shrimp {
-      width: clamp(200px, 30vw, 380px);
-      margin-top: 48px;
-      animation: float 4s ease-in-out infinite;
-      filter: drop-shadow(0 0 40px rgba(0,255,71,.25));
+    .hero-right img {
+      width: clamp(240px, 60%, 500px);
+      animation: float 5s ease-in-out infinite;
+      filter: drop-shadow(0 20px 40px rgba(212,75,16,.12));
     }
     @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-20px); }
+      0%, 100% { transform: translateY(0) rotate(-1deg); }
+      50%       { transform: translateY(-14px) rotate(1deg); }
     }
 
-    /* Radial glow background */
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 20%; left: 50%;
-      transform: translateX(-50%);
-      width: 800px; height: 600px;
-      background: radial-gradient(ellipse, rgba(0,255,71,.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    /* ── TICKER / MARQUEE ── */
-    .ticker-wrap {
-      overflow: hidden;
+    /* CTA bar */
+    .hero-cta-bar {
+      display: grid;
+      grid-template-columns: 1fr auto;
       border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 14px 0;
-      background: var(--bg-card);
     }
-    .ticker-inner {
-      display: flex;
-      gap: 0;
-      animation: ticker 20s linear infinite;
-      width: max-content;
-    }
-    .ticker-item {
+    .hero-cta-text {
       font-family: 'Chakra Petch', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: .1em;
-      white-space: nowrap;
-      padding: 0 40px;
-      color: var(--muted);
+      font-size: clamp(14px, 1.6vw, 20px);
+      font-weight: 500;
+      color: var(--text);
+      padding: 20px 40px;
+      border-right: 1px solid var(--border);
     }
-    .ticker-item span { color: var(--green); margin-right: 8px; }
-    @keyframes ticker {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-
-    /* ── SECTION GENERIC ── */
-    section { padding: 100px 40px; }
-    .section-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      letter-spacing: .18em;
-      color: var(--green);
-      text-transform: uppercase;
-      margin-bottom: 16px;
+    .hero-cta-btn {
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: center;
+      padding: 20px 40px;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-decoration: none;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--orange);
+      white-space: nowrap;
+      transition: background .2s;
     }
-    .section-label::after {
-      content: '';
-      display: block;
-      flex: 1;
-      max-width: 48px;
-      height: 1px;
-      background: var(--green);
-    }
+    .hero-cta-btn:hover { background: var(--text); }
 
-    /* ── USP / INTRO ── */
+    /* ── USP ── */
     .usp {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
     }
-
-    .usp-text h2 {
-      font-size: clamp(32px, 4vw, 52px);
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 28px;
+    .usp-left {
+      padding: 56px 40px;
+      border-right: 1px solid var(--border);
     }
-    .usp-text h2 em {
-      font-style: normal;
-      color: var(--green);
+    .usp-right {
+      padding: 56px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
-    .usp-text p {
+    .section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .18em;
       color: var(--muted);
-      font-size: 16px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .usp-left h2 {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: clamp(14px, 1.4vw, 18px);
+      font-weight: 500;
+      color: var(--text2);
+      line-height: 1.55;
+    }
+    .usp-right p {
+      font-size: 15px;
+      color: var(--muted);
       line-height: 1.75;
-      max-width: 480px;
-      margin-bottom: 32px;
+      margin-bottom: 36px;
     }
-
-    .usp-image {
-      position: relative;
+    .btn-orange {
+      display: inline-flex;
+      align-items: center;
+      padding: 13px 28px;
+      background: var(--orange);
+      color: var(--white);
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 6px;
+      align-self: flex-start;
+      transition: background .2s;
     }
-    .usp-image img {
-      width: 100%;
-      border-radius: var(--radius);
-      display: block;
-    }
-    .usp-image::before {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      border-radius: calc(var(--radius) + 1px);
-      background: linear-gradient(135deg, var(--green-glow), transparent 60%);
-      z-index: -1;
-    }
+    .btn-orange:hover { background: var(--text); }
 
     /* ── FEATURES ── */
-    .features { background: var(--bg-card); }
-    .features-head {
-      text-align: center;
-      max-width: 600px;
-      margin: 0 auto 64px;
+    /* Orange pill divider */
+    .section-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 40px;
+      background: var(--orange);
     }
-    .features-head h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 700; }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .feature-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px 28px;
-      transition: border-color .3s, transform .3s, box-shadow .3s;
-    }
-    .feature-card:hover {
-      border-color: var(--green);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,255,71,.1);
-    }
-
-    .feature-emoji {
-      font-size: 32px;
-      margin-bottom: 16px;
-      display: block;
-    }
-    .feature-card h3 {
+    .section-pill span {
       font-family: 'Chakra Petch', sans-serif;
-      font-size: 17px;
+      font-size: 13px;
       font-weight: 600;
-      margin-bottom: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--white);
     }
-    .feature-card p {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.65;
+    .section-pill-dots { display: flex; gap: 5px; }
+    .section-pill-dots i {
+      display: block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.4);
     }
 
-    /* Screenshot strip */
-    .screenshot-strip {
-      max-width: 1200px;
-      margin: 64px auto 0;
-      position: relative;
+    /* Features section — LIGHT background, 2-column */
+    .features {
+      background: var(--bg);
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      border-bottom: 1px solid var(--border);
+      min-height: 520px;
     }
-    .screenshot-strip img {
-      width: 100%;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      display: block;
+    .features-list {
+      border-right: 1px solid var(--border);
+      padding: 48px 36px;
+      display: flex;
+      flex-direction: column;
+    }
+    .features-heading {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: clamp(40px, 4vw, 56px);
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 36px;
+    }
+    .feature-item {
+      border-top: 1px solid var(--border);
+      padding: 18px 0;
+    }
+    .feature-item:last-child { border-bottom: 1px solid var(--border); }
+    .feature-item-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .feature-emoji { font-size: 18px; line-height: 1; }
+    .feature-item h3 {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .feature-item p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Right side: large MacBook image */
+    .features-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 48px;
+      overflow: hidden;
+    }
+    .features-image img {
+      width: 115%;
+      max-width: 860px;
+      object-fit: contain;
+      filter: drop-shadow(0 20px 48px rgba(0,0,0,.1));
     }
 
     /* ── WAITLIST ── */
-    .waitlist {
-      background: var(--bg);
-      position: relative;
-      overflow: hidden;
-    }
-    .waitlist::before {
-      content: '';
-      position: absolute;
-      bottom: -100px; left: 50%;
-      transform: translateX(-50%);
-      width: 600px; height: 400px;
-      background: radial-gradient(ellipse, rgba(0,255,71,.07) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
+    .waitlist { background: var(--bg-dark); }
     .waitlist-inner {
-      max-width: 680px;
-      margin: 0 auto;
-      text-align: center;
-      position: relative;
-      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
     }
-    .waitlist-inner h2 {
-      font-size: clamp(32px, 5vw, 56px);
-      font-weight: 700;
-      margin-bottom: 16px;
+    .waitlist-left {
+      padding: 64px 40px;
+      border-right: 1px solid rgba(255,255,255,.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .waitlist-inner .sub {
-      color: var(--muted);
-      font-size: 15px;
+    .waitlist-left img {
+      width: clamp(160px, 40%, 260px);
+      animation: float 5s ease-in-out infinite;
+      filter: drop-shadow(0 16px 32px rgba(212,75,16,.2));
+    }
+    .waitlist-right { padding: 64px 40px; }
+    .waitlist-right h2 {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: clamp(22px, 2.5vw, 32px);
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .waitlist-right .wl-sub {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: clamp(14px, 1.4vw, 20px);
+      font-weight: 500;
+      color: var(--white);
       margin-bottom: 12px;
     }
-    .waitlist-inner .note {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 40px;
-      line-height: 1.6;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 18px;
-      background: var(--bg-card);
+    .waitlist-right .wl-note {
+      font-size: 14px;
+      color: rgba(255,255,255,.4);
+      line-height: 1.65;
+      margin-bottom: 36px;
     }
-
-    /* Form */
-    .waitlist-form {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .form-group {
-      position: relative;
-    }
+    .waitlist-form { display: flex; flex-direction: column; gap: 12px; }
     .form-group label {
       display: block;
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      letter-spacing: .12em;
-      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: .16em;
       text-transform: uppercase;
+      color: rgba(255,255,255,.35);
       margin-bottom: 6px;
-      text-align: left;
     }
     .form-group input {
       width: 100%;
-      padding: 14px 18px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: var(--text);
+      padding: 13px 16px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 7px;
+      color: var(--white);
       font-family: 'Inter', sans-serif;
       font-size: 15px;
       outline: none;
-      transition: border-color .2s, box-shadow .2s;
+      transition: border-color .2s;
     }
-    .form-group input::placeholder { color: rgba(255,255,255,.25); }
-    .form-group input:focus {
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(0,255,71,.1);
-    }
-
+    .form-group input::placeholder { color: rgba(255,255,255,.2); }
+    .form-group input:focus { border-color: var(--orange); }
     .form-submit {
-      width: 100%;
-      padding: 16px;
-      background: var(--green);
-      color: #000;
+      padding: 14px;
+      background: var(--white);
+      color: var(--text);
       border: none;
-      border-radius: 10px;
-      font-family: 'Chakra Petch', sans-serif;
+      border-radius: 7px;
+      font-family: 'Inter', sans-serif;
       font-size: 14px;
-      font-weight: 700;
-      letter-spacing: .1em;
+      font-weight: 600;
       cursor: pointer;
       transition: all .2s;
       margin-top: 4px;
     }
-    .form-submit:hover {
-      background: #fff;
-      transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(0,255,71,.2);
-    }
-    .form-submit:active { transform: translateY(0); }
-
-    /* Success message */
+    .form-submit:hover { background: var(--orange); color: var(--white); }
     .form-success {
       display: none;
-      padding: 20px;
-      background: var(--green-dim);
-      border: 1px solid var(--green);
-      border-radius: 10px;
-      color: var(--green);
+      padding: 18px;
+      background: rgba(212,75,16,.15);
+      border: 1px solid var(--orange);
+      border-radius: 7px;
+      color: var(--orange);
       font-family: 'Chakra Petch', sans-serif;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       text-align: center;
-    }
-
-    /* Shrimp decoration */
-    .waitlist-shrimp {
-      width: 120px;
-      margin: 0 auto 32px;
-      animation: float 4s ease-in-out infinite;
-      filter: drop-shadow(0 0 20px rgba(0,255,71,.3));
+      margin-top: 12px;
     }
 
     /* ── FOOTER ── */
     footer {
+      background: var(--bg);
       border-top: 1px solid var(--border);
-      padding: 60px 40px 40px;
+      padding: 56px 40px 40px;
     }
-
     .footer-top {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 48px;
-      max-width: 1200px;
-      margin: 0 auto 60px;
+      margin-bottom: 56px;
     }
-
-    .footer-col h4 {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 20px;
+    .footer-col-label {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: clamp(18px, 2vw, 26px);
+      font-weight: 500;
+      color: var(--orange);
+      margin-bottom: 14px;
     }
-    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
     .footer-col ul a {
-      font-size: 14px;
-      color: var(--muted);
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
       text-decoration: none;
       transition: color .2s;
     }
-    .footer-col ul a:hover { color: var(--text); }
-
-    .footer-brand {
-      max-width: 1200px;
-      margin: 0 auto;
+    .footer-col ul a:hover { color: var(--orange); }
+    .footer-col .mono-links a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .footer-bottom {
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
       gap: 20px;
     }
-    .footer-big {
+    .footer-wordmark {
       font-family: 'Chakra Petch', sans-serif;
-      font-size: clamp(36px, 8vw, 96px);
-      font-weight: 700;
+      font-size: clamp(40px, 8vw, 110px);
+      font-weight: 500;
       line-height: 1;
-      color: rgba(255,255,255,.06);
-      letter-spacing: -.02em;
+      color: rgba(27,28,30,.07);
+      letter-spacing: -.01em;
     }
     .footer-copy {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 11px;
       color: var(--muted);
-      letter-spacing: .08em;
       text-align: right;
+      line-height: 1.6;
     }
 
-    /* ── ANIMATIONS ── */
+    /* ── SCROLL ANIMATIONS ── */
     .fade-up {
       opacity: 0;
-      transform: translateY(32px);
-      transition: opacity .7s ease, transform .7s ease;
+      transform: translateY(24px);
+      transition: opacity .6s ease, transform .6s ease;
     }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .fade-up.delay-1 { transition-delay: .1s; }
-    .fade-up.delay-2 { transition-delay: .2s; }
-    .fade-up.delay-3 { transition-delay: .3s; }
-    .fade-up.delay-4 { transition-delay: .4s; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up.d1 { transition-delay: .08s; }
+    .fade-up.d2 { transition-delay: .16s; }
+    .fade-up.d3 { transition-delay: .24s; }
+    .fade-up.d4 { transition-delay: .32s; }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      nav { padding: 16px 20px; }
-      .nav-links { display: none; }
+    @media (max-width: 900px) {
+      nav { grid-template-columns: 1fr auto; }
+      .nav-center, .nav-right { display: none; }
       .hamburger { display: flex; }
 
-      section { padding: 72px 20px; }
+      .hero-main { grid-template-columns: 1fr; }
+      .hero-left { border-right: none; border-bottom: 1px solid var(--border); padding: 80px 20px 32px; }
+      .hero-right { padding: 32px 20px; }
+      .hero-cta-bar { grid-template-columns: 1fr; }
+      .hero-cta-text { border-right: none; border-bottom: 1px solid var(--border); }
 
-      .usp {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-      .usp-image { order: -1; }
+      .usp { grid-template-columns: 1fr; }
+      .usp-left { border-right: none; border-bottom: 1px solid var(--border); padding: 40px 20px; }
+      .usp-right { padding: 40px 20px; }
 
-      .footer-top { grid-template-columns: 1fr 1fr; }
-      .footer-brand { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .features { grid-template-columns: 1fr; }
+      .features-list { border-right: none; border-bottom: 1px solid var(--border); padding: 40px 20px; }
+      .features-image { padding: 32px 20px; }
+      .features-image img { width: 100%; }
+
+      .waitlist-inner { grid-template-columns: 1fr; }
+      .waitlist-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,.06); padding: 40px 20px; }
+      .waitlist-right { padding: 40px 20px; }
+
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
       .footer-copy { text-align: left; }
+      .section-pill { padding: 10px 20px; }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 540px) {
       .footer-top { grid-template-columns: 1fr; }
-      .hero-cta { flex-direction: column; align-items: center; }
+      .hero-title { font-size: clamp(72px, 22vw, 120px); }
     }
   </style>
 </head>
@@ -658,181 +580,136 @@
 
 <!-- ── NAV ── -->
 <nav id="nav">
-  <a href="index.html" class="nav-logo">
-    <span>✦</span> OFFICE SHRIMP
-  </a>
-  <ul class="nav-links">
-    <li><a href="index.html">HOME</a></li>
+  <a href="index.html" class="nav-logo">OFFICE<br/>SHRIMP</a>
+  <ul class="nav-center">
+    <li><a href="index.html" class="active">HOME</a></li>
     <li><a href="#features">FEATURES</a></li>
     <li><a href="#waitlist">WAITLIST</a></li>
-    <li><a href="about.html">ABOUT</a></li>
   </ul>
-  <button class="hamburger" id="hamburger" aria-label="Menu öffnen">
+  <div class="nav-right"><a href="about.html">ABOUT</a></div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
-<!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="index.html" onclick="closeMobile()">HOME</a>
-  <a href="#features" onclick="closeMobile()">FEATURES</a>
-  <a href="#waitlist" onclick="closeMobile()">WAITLIST</a>
-  <a href="about.html" onclick="closeMobile()">ABOUT</a>
+  <a href="index.html"   onclick="closeMobile()">HOME</a>
+  <a href="#features"    onclick="closeMobile()">FEATURES</a>
+  <a href="#waitlist"    onclick="closeMobile()">WAITLIST</a>
+  <a href="about.html"   onclick="closeMobile()">ABOUT</a>
 </div>
 
 <!-- ── HERO ── -->
 <section class="hero" id="hero-section">
-  <div class="hero-inner">
-    <p class="hero-tag">macOS Menu Bar App</p>
-
-    <h1 class="hero-title">
-      <span class="line1">OFFICE</span>
-      <span class="line2">SHRIMP</span>
-    </h1>
-
-    <p class="hero-subtitle">
-      The first menu bar app that turns better posture into a game.
-    </p>
-
-    <div class="hero-cta">
-      <a href="#waitlist" class="btn btn-green">JOIN THE WAITLIST</a>
-      <a href="#features" class="btn btn-outline">LEARN MORE</a>
+  <div class="hero-main">
+    <div class="hero-left">
+      <h1 class="hero-title">OFFICE<br/>SHRIMP</h1>
+      <p class="hero-subtitle">The first menu bar app that turns better posture into a game.</p>
     </div>
-
-    <img
-      class="hero-shrimp"
-      src="https://framerusercontent.com/images/hmM2tzr1ArTO1Nua5sxWjxzpvX8.png"
-      alt="Office Shrimp Maskottchen"
-      loading="eager"
-    />
+    <div class="hero-right">
+      <img src="images/shrimp-icon.png" alt="Office Shrimp App Icon" loading="eager" />
+    </div>
+  </div>
+  <div class="hero-cta-bar">
+    <p class="hero-cta-text">Join the Waitlist NOW via the Form below &nbsp;—&gt;</p>
+    <a href="#waitlist" class="hero-cta-btn">JOIN THE WAITLIST</a>
   </div>
 </section>
 
-<!-- ── TICKER ── -->
-<div class="ticker-wrap">
-  <div class="ticker-inner">
-    <!-- duplicated for seamless loop -->
-    <span class="ticker-item"><span>✦</span>BETTER POSTURE</span>
-    <span class="ticker-item"><span>✦</span>GAMIFIED HEALTH</span>
-    <span class="ticker-item"><span>✦</span>MENU BAR APP</span>
-    <span class="ticker-item"><span>✦</span>PRIVACY FIRST</span>
-    <span class="ticker-item"><span>✦</span>JOIN THE WAITLIST</span>
-    <span class="ticker-item"><span>✦</span>macOS NATIVE</span>
-    <span class="ticker-item"><span>✦</span>BETTER POSTURE</span>
-    <span class="ticker-item"><span>✦</span>GAMIFIED HEALTH</span>
-    <span class="ticker-item"><span>✦</span>MENU BAR APP</span>
-    <span class="ticker-item"><span>✦</span>PRIVACY FIRST</span>
-    <span class="ticker-item"><span>✦</span>JOIN THE WAITLIST</span>
-    <span class="ticker-item"><span>✦</span>macOS NATIVE</span>
+<!-- ── USP ── -->
+<div class="usp">
+  <div class="usp-left fade-up">
+    <p class="section-label">Shrimp/</p>
+    <h2>Not just another annoying timer. But a digital Pet that interacts with you!</h2>
+  </div>
+  <div class="usp-right fade-up d2">
+    <div>
+      <p class="section-label">USP/</p>
+      <p>Most posture apps just nag you. Office Shrimp rewards you. Start your career as a "Junior Krill" and climb the corporate ladder to become the "CEO Shrimp" simply by drinking water, taking breaks, and sitting straight.</p>
+    </div>
+    <a href="#waitlist" class="btn-orange">JOIN THE WAITLIST</a>
   </div>
 </div>
 
-<!-- ── USP SECTION ── -->
-<section id="usp">
-  <div class="usp">
-    <div class="usp-text fade-up">
-      <p class="section-label">Shrimp/</p>
-      <h2>Not just another annoying timer. But a <em>digital Pet</em> that interacts with you!</h2>
-      <p>Most posture apps just nag you. Office Shrimp rewards you. Start your career as a "Junior Krill" and climb the corporate ladder to become the "CEO Shrimp" simply by drinking water, taking breaks, and sitting straight.</p>
-      <a href="#waitlist" class="btn btn-green">JOIN THE WAITLIST</a>
-    </div>
-    <div class="usp-image fade-up delay-2">
-      <img
-        src="https://framerusercontent.com/images/cOVOKLxyBUSJxwvj5lbzhTbe8zE.png"
-        alt="Office Shrimp App Screenshot"
-        loading="lazy"
-      />
-    </div>
-  </div>
-</section>
+<!-- ── FEATURES pill + section ── -->
+<div class="section-pill" id="features">
+  <span>Features</span>
+  <div class="section-pill-dots"><i></i><i></i><i></i></div>
+</div>
 
-<!-- ── FEATURES ── -->
-<section class="features" id="features">
-  <div class="features-head fade-up">
-    <p class="section-label" style="justify-content:center; gap:10px;">
-      <span style="width:32px;height:1px;background:var(--green);display:block;"></span>
-      Features
-      <span style="width:32px;height:1px;background:var(--green);display:block;"></span>
-    </p>
-    <h2>Features</h2>
-  </div>
+<section class="features">
+  <!-- Left: feature list -->
+  <div class="features-list">
+    <h2 class="features-heading">Features</h2>
 
-  <div class="features-grid">
-    <div class="feature-card fade-up delay-1">
-      <span class="feature-emoji">⚡️</span>
-      <h3>Smart Reminders</h3>
+    <div class="feature-item fade-up d1">
+      <div class="feature-item-head">
+        <span class="feature-emoji">⚡️</span>
+        <h3>Smart Reminders</h3>
+      </div>
       <p>Forget rigid timers. Get nudged to fix your posture, drink water, and blink — only when you need it.</p>
     </div>
-    <div class="feature-card fade-up delay-2">
-      <span class="feature-emoji">🎮</span>
-      <h3>Leveling System</h3>
+
+    <div class="feature-item fade-up d2">
+      <div class="feature-item-head">
+        <span class="feature-emoji">🎮</span>
+        <h3>Leveling System</h3>
+      </div>
       <p>Collect XP for every healthy habit. Unlock new ranks and cosmetic upgrades for your Shrimp.</p>
     </div>
-    <div class="feature-card fade-up delay-3">
-      <span class="feature-emoji">🍅</span>
-      <h3>Pomodoro Breaks</h3>
+
+    <div class="feature-item fade-up d3">
+      <div class="feature-item-head">
+        <span class="feature-emoji">🍅</span>
+        <h3>Pomodoro Breaks</h3>
+      </div>
       <p>Focus phases that respect your flow. The Shrimp knows when you need a break (The "Oase" Mode).</p>
     </div>
-    <div class="feature-card fade-up delay-4">
-      <span class="feature-emoji">🔒</span>
-      <h3>Privacy First</h3>
+
+    <div class="feature-item fade-up d4">
+      <div class="feature-item-head">
+        <span class="feature-emoji">🔒</span>
+        <h3>Privacy First</h3>
+      </div>
       <p>What happens on your Mac, stays on your Mac. No cloud, no tracking, just you and the Shrimp.</p>
     </div>
   </div>
 
-  <div class="screenshot-strip fade-up">
-    <img
-      src="https://framerusercontent.com/images/qvQkLqJekAv30Rn9neqevOTi0XU.png"
-      alt="Office Shrimp Interface"
-      loading="lazy"
-    />
+  <!-- Right: MacBook screenshot -->
+  <div class="features-image fade-up">
+    <img src="images/features-macbook.png" alt="Office Shrimp Interface" loading="lazy" />
   </div>
 </section>
 
-<!-- ── WAITLIST ── -->
-<section class="waitlist" id="waitlist">
+<!-- ── WAITLIST pill + section ── -->
+<div class="section-pill" id="waitlist">
+  <span>Join the Waitlist</span>
+  <div class="section-pill-dots"><i></i><i></i><i></i></div>
+</div>
+
+<section class="waitlist">
   <div class="waitlist-inner">
-    <img
-      class="waitlist-shrimp"
-      src="https://framerusercontent.com/images/hmM2tzr1ArTO1Nua5sxWjxzpvX8.png"
-      alt="Office Shrimp"
-      loading="lazy"
-    />
-
-    <div class="fade-up">
-      <p class="section-label" style="justify-content:center;">Join the Waitlist</p>
-      <h2>Join the Waitlist</h2>
-      <p class="sub">Enter your Mail to get notified when the App is released</p>
-      <p class="note">
-        You will get frequent updates about the current app state and features as well as early access as soon as the app gets released.
-      </p>
+    <div class="waitlist-left">
+      <img src="images/shrimp-icon.png" alt="Office Shrimp" loading="lazy" />
     </div>
-
-    <!--
-      FORMSPREE SETUP:
-      1. Geh auf https://formspree.io und erstell einen kostenlosen Account
-      2. Erstell ein neues Form und kopier deine Form-ID
-      3. Ersetze "YOUR_FORM_ID" unten mit deiner ID (z.B. xpwzabcd)
-    -->
-    <form
-      class="waitlist-form fade-up delay-1"
-      id="waitlistForm"
-      action="https://formspree.io/f/YOUR_FORM_ID"
-      method="POST"
-    >
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" placeholder="Dein Name" required />
+    <div class="waitlist-right fade-up">
+      <h2>Join the Waitlist</h2>
+      <p class="wl-sub">Enter your Mail to get notified when the App is released</p>
+      <p class="wl-note">You will get frequent updates about the current app state and features as well as early access as soon as the app gets released.</p>
+      <form class="waitlist-form" id="waitlistForm" action="https://formspree.io/f/meebqvnb" method="POST">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Dein Name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="deine@email.com" required />
+        </div>
+        <button type="submit" class="form-submit">Submit</button>
+      </form>
+      <div class="form-success" id="formSuccess">
+        🦐 Du bist auf der Liste! Wir melden uns sobald die App live geht.
       </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="deine@email.com" required />
-      </div>
-      <button type="submit" class="form-submit">SUBMIT →</button>
-    </form>
-
-    <div class="form-success" id="formSuccess">
-      🦐 Du bist auf der Liste! Wir melden uns sobald die App live geht.
     </div>
   </div>
 </section>
@@ -841,47 +718,38 @@
 <footer>
   <div class="footer-top">
     <div class="footer-col">
-      <h4>Pages</h4>
+      <p class="footer-col-label">Pages</p>
       <ul>
-        <li><a href="index.html#hero-section">Home</a></li>
+        <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="#">Datenschutz</a></li>
-        <li><a href="#">Impressum</a></li>
+        <li><a href="datenschutz.html">Datenschutz</a></li>
+        <li><a href="impressum.html">Impressum</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Social Media</h4>
-      <ul>
-        <li><a href="https://www.instagram.com/girni._/" target="_blank" rel="noopener">Instagram: @girni._</a></li>
-        <li><a href="https://david-girnstein.framer.website" target="_blank" rel="noopener">Portfolio: David Girnstein</a></li>
+      <p class="footer-col-label">Social Media</p>
+      <ul class="mono-links">
+        <li><a href="https://www.instagram.com/david_girnstein/" target="_blank" rel="noopener">Instagram: @david_girnstein</a></li>
+        <li><a href="https://girnstein.studio" target="_blank" rel="noopener">Portfolio: girnstein.studio</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Email</h4>
-      <ul>
-        <li><a href="mailto:girn.davi01@gmail.com">GIRN.DAVI01@GMAIL.COM</a></li>
+      <p class="footer-col-label">Email</p>
+      <ul class="mono-links">
+        <li><a href="mailto:office-shrimp@girnstein.studio">office-shrimp@girnstein.studio</a></li>
       </ul>
     </div>
   </div>
-
-  <div class="footer-brand">
-    <div class="footer-big">OFFICE&nbsp;&nbsp;SHRIMP</div>
-    <div class="footer-copy">
-      © 2025 Office Shrimp<br />
-      Made with 🦐 in Cologne
-    </div>
+  <div class="footer-bottom">
+    <div class="footer-wordmark">OFFICE &nbsp;SHRIMP</div>
+    <div class="footer-copy">© 2025 Office Shrimp<br/>Made with 🦐 in Cologne</div>
   </div>
 </footer>
 
-<!-- ── SCRIPTS ── -->
 <script>
-  /* Nav scroll effect */
   const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 20);
-  });
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 10));
 
-  /* Hamburger */
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
   hamburger.addEventListener('click', () => {
@@ -893,44 +761,22 @@
     mobileMenu.classList.remove('open');
   }
 
-  /* Intersection Observer – fade-up */
-  const observer = new IntersectionObserver(
+  const obs = new IntersectionObserver(
     entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-    { threshold: 0.12 }
+    { threshold: 0.08 }
   );
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 
-  /* Formspree AJAX submit */
   const form = document.getElementById('waitlistForm');
-  const success = document.getElementById('formSuccess');
-
+  const successMsg = document.getElementById('formSuccess');
   form.addEventListener('submit', async e => {
     e.preventDefault();
-
-    // Check if still placeholder
-    if (form.action.includes('YOUR_FORM_ID')) {
-      alert('⚠️ Bitte erst Formspree-ID eintragen! Siehe Kommentar im HTML.');
-      return;
-    }
-
-    const data = new FormData(form);
     try {
-      const res = await fetch(form.action, {
-        method: 'POST',
-        body: data,
-        headers: { Accept: 'application/json' }
-      });
-      if (res.ok) {
-        form.style.display = 'none';
-        success.style.display = 'block';
-      } else {
-        alert('Etwas ist schiefgelaufen. Versuch es nochmal.');
-      }
-    } catch {
-      alert('Kein Netzwerk. Versuch es nochmal.');
-    }
+      const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      if (res.ok) { form.style.display = 'none'; successMsg.style.display = 'block'; }
+      else alert('Etwas ist schiefgelaufen. Versuch es nochmal.');
+    } catch { alert('Kein Netzwerk. Versuch es nochmal.'); }
   });
 </script>
-
 </body>
 </html>
